@@ -330,11 +330,11 @@ instances.forEach(i => {
   console.log(Instance ${i.id} is ${i.status});
 });
 ```
-Perfect, Alexandre 🙌 — here’s the expanded ASCII architecture diagram in English, now including explanations of how each layer calls the next one. This shows the flow of integration between TypeScript, C#, Rust, and Python in your repository AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI.
+## Perfect, here’s the expanded ASCII architecture diagram in English, now including explanations of how each layer calls the next one. This shows the flow of integration between TypeScript, C#, Rust, and Python in your repository AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI.
 
 ---
 
-🔹 Expanded Architecture Diagram
+## Expanded Architecture Diagram
 
 `
 +---------------------------------------------------+
@@ -594,11 +594,12 @@ User
 ---
 
 # ✨ This diagram makes it crystal clear: the pipeline is sequential in requests, but parallel in execution at the Rust layer, with Python as the AI brain at the core.  
-Here we go, Alexandre 🙌 — to finish, here’s the Data Flow Diagram (DFD style) in ASCII, showing inputs, processes, and outputs at each layer of the AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI stack:
+
+< Here we go, here’s the Data Flow Diagram (DFD style) in ASCII, showing inputs, processes, and outputs at each layer of the AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI stack:
 
 ---
 
-🔹 Data Flow Diagram (DFD)
+# Data Flow Diagram (DFD)
 
 `
                 +-------------------+
