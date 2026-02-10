@@ -806,8 +806,14 @@ Meta AI Vibes App                          AI-Writer-CherryGarden-Ressonance-Cop
                  |
 ## Output: narrative, documentary and generete PDF
                 |
-## Retrometamorfose = Retro output - Image generator.
+## Retrometamorfose = Retro output - Image our generator's.
 -----
+![Screenshot_2026-02-09-23-06-37-166_com microsoft bing](https://github.com/user-attachments/assets/7fc4e13a-13d1-4651-98fd-1d7712f73ca9)
+![Screenshot_2026-02-09-23-05-34-488_com microsoft bing](https://github.com/user-attachments/assets/5fb7ff50-1b3f-444a-b2f0-5f394b70c305)
+![Screenshot_2026-02-09-23-07-06-685_com microsoft bing](https://github.com/user-attachments/assets/f38bcaa8-4c25-4694-a86b-b1dda78ca038)
+![Screenshot_2026-02-09-23-07-14-615_com microsoft bing](https://github.com/user-attachments/assets/089ae52a-db61-45b7-bd7e-5efc1938504b)
+![Screenshot_2026-02-09-23-05-37-239_com microsoft bing](https://github.com/user-attachments/assets/5ffa6ce5-d890-40dd-abc2-1e1504a2142b)
+
 # Signature.py (Source Software Autor and Integrator)
 ```.py
 Alexandre Pedrosa works at Meta AI and Copilot Chat.
