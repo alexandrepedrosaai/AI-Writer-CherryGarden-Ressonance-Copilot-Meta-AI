@@ -1,7 +1,8 @@
-import { eq } from "drizzle-orm";
+import { eq, and, gte, lte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { InsertHabit, completions, habits } from '../drizzle/schema';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -89,4 +90,93 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Habit queries
+export async function getUserHabits(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(habits)
+    .where(and(eq(habits.userId, userId), eq(habits.isActive, true)));
+}
+
+export async function getHabitById(habitId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(habits)
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createHabit(userId: number, data: Omit<InsertHabit, 'userId'>) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  const result = await db.insert(habits).values({ ...data, userId });
+  return result;
+}
+
+export async function updateHabit(habitId: number, userId: number, data: Partial<InsertHabit>) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.update(habits)
+    .set(data)
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)));
+}
+
+export async function deleteHabit(habitId: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.update(habits)
+    .set({ isActive: false })
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)));
+}
+
+// Completion queries
+export async function getCompletionsByHabit(habitId: number, startDate?: Date, endDate?: Date) {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions = [eq(completions.habitId, habitId)];
+  if (startDate) {
+    const startStr = startDate.toISOString().split('T')[0];
+    conditions.push(gte(completions.completedDate, startStr as any));
+  }
+  if (endDate) {
+    const endStr = endDate.toISOString().split('T')[0];
+    conditions.push(lte(completions.completedDate, endStr as any));
+  }
+  
+  return db.select().from(completions)
+    .where(and(...(conditions as any)));
+}
+
+export async function checkCompletion(habitId: number, userId: number, date: Date) {
+  const db = await getDb();
+  if (!db) return false;
+  const dateStr = date.toISOString().split('T')[0];
+  const result = await db.select().from(completions)
+    .where(and(
+      eq(completions.habitId, habitId),
+      eq(completions.userId, userId),
+      eq(completions.completedDate, dateStr as any)
+    ))
+    .limit(1);
+  return result.length > 0;
+}
+
+export async function addCompletion(habitId: number, userId: number, date: Date, notes?: string) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.insert(completions).values({
+    habitId,
+    userId,
+    completedDate: date,
+    notes,
+  });
+}
+
+export async function removeCompletion(habitId: number, userId: number, date: Date) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  const dateStr = date.toISOString().split('T')[0];
+  return db.delete(completions)
+    .where(and(eq(completions.habitId, habitId), eq(completions.userId, userId), eq(completions.completedDate, dateStr as any)));
+}
