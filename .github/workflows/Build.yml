@@ -39,5 +39,5 @@ jobs:
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ai-writer-package
-          path: rust-core/target/release/ai_writer_cherrygarden_ressonance
+          name: ai-writer-package-v0.2.0
+          path: rust-core/target/release/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI
