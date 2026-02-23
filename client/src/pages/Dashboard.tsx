@@ -4,9 +4,10 @@ import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Plus, LogOut, Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HabitCard from "@/components/HabitCard";
 import CreateHabitDialog from "@/components/CreateHabitDialog";
+import { requestNotificationPermission } from "@/lib/notificationService";
 
 export default function Dashboard() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -31,6 +32,14 @@ export default function Dashboard() {
     refetch();
   };
 
+  const [showNotificationBanner, setShowNotificationBanner] = useState(
+    typeof window !== 'undefined' && 'Notification' in window && Notification.permission !== 'granted'
+  );
+
+  useEffect(() => {
+    requestNotificationPermission().catch(console.error);
+  }, []);
+
   // Calculate today's completion stats
   const completedToday = 0; // Will be calculated from completion queries
 
@@ -38,6 +47,31 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      {showNotificationBanner && (
+        <div className="bg-accent/10 border-b border-accent/20 px-4 py-3 flex items-center justify-between">
+          <p className="text-sm text-accent-foreground">Enable notifications to get habit reminders</p>
+          <div className="flex gap-2">
+            <button
+              onClick={async () => {
+                const granted = await requestNotificationPermission();
+                if (granted) {
+                  setShowNotificationBanner(false);
+                }
+              }}
+              className="text-xs font-medium px-3 py-1 bg-accent text-accent-foreground rounded hover:opacity-90"
+            >
+              Enable
+            </button>
+            <button
+              onClick={() => setShowNotificationBanner(false)}
+              className="text-xs font-medium px-3 py-1 hover:bg-accent/10 rounded"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="border-b border-border/40 bg-card/50 backdrop-blur-sm sticky top-0 z-40">
         <div className="container flex items-center justify-between h-16">

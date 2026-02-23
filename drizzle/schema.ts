@@ -80,3 +80,28 @@ export const completionsRelations = relations(completions, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+// Reminders table for push notifications
+export const reminders = mysqlTable("reminders", {
+  id: int("id").autoincrement().primaryKey(),
+  habitId: int("habitId").notNull(),
+  userId: int("userId").notNull(),
+  reminderTime: varchar("reminderTime", { length: 5 }).notNull(), // HH:MM format
+  enabled: boolean("enabled").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Reminder = typeof reminders.$inferSelect;
+export type InsertReminder = typeof reminders.$inferInsert;
+
+export const remindersRelations = relations(reminders, ({ one }) => ({
+  habit: one(habits, {
+    fields: [reminders.habitId],
+    references: [habits.id],
+  }),
+  user: one(users, {
+    fields: [reminders.userId],
+    references: [users.id],
+  }),
+}));

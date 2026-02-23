@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import EditHabitDialog from "./EditHabitDialog";
+import ReminderDialog from "./ReminderDialog";
 import { toast } from "sonner";
 
 interface HabitCardProps {
@@ -20,6 +21,7 @@ interface HabitCardProps {
 
 export default function HabitCard({ habit, onUpdate }: HabitCardProps) {
   const [editOpen, setEditOpen] = useState(false);
+  const [reminderOpen, setReminderOpen] = useState(false);
   const toggleMutation = trpc.completions.toggleToday.useMutation();
   const checkTodayQuery = trpc.completions.checkToday.useQuery({ habitId: habit.id });
   const deleteMutation = trpc.habits.delete.useMutation();
@@ -90,6 +92,9 @@ export default function HabitCard({ habit, onUpdate }: HabitCardProps) {
               <DropdownMenuItem onClick={() => setEditOpen(true)}>
                 Edit
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setReminderOpen(true)}>
+                Set Reminder
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleDelete}
                 className="text-destructive"
@@ -148,6 +153,14 @@ export default function HabitCard({ habit, onUpdate }: HabitCardProps) {
         habit={habit}
         open={editOpen}
         onOpenChange={setEditOpen}
+        onSuccess={onUpdate}
+      />
+
+      <ReminderDialog
+        habitId={habit.id}
+        habitName={habit.name}
+        open={reminderOpen}
+        onOpenChange={setReminderOpen}
         onSuccess={onUpdate}
       />
     </>

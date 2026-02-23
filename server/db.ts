@@ -2,7 +2,7 @@ import { eq, and, gte, lte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
-import { InsertHabit, completions, habits } from '../drizzle/schema';
+import { InsertHabit, completions, habits, InsertReminder, reminders } from '../drizzle/schema';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -180,3 +180,55 @@ export async function removeCompletion(habitId: number, userId: number, date: Da
   return db.delete(completions)
     .where(and(eq(completions.habitId, habitId), eq(completions.userId, userId), eq(completions.completedDate, dateStr as any)));
 }
+
+
+// Reminder queries
+export async function getRemindersByHabit(habitId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(reminders)
+    .where(eq(reminders.habitId, habitId));
+}
+
+export async function getRemindersByUser(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(reminders)
+    .where(eq(reminders.userId, userId));
+}
+
+export async function createReminder(userId: number, habitId: number, reminderTime: string) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.insert(reminders).values({
+    habitId,
+    userId,
+    reminderTime,
+    enabled: true,
+  });
+}
+
+export async function updateReminder(reminderId: number, userId: number, data: Partial<InsertReminder>) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.update(reminders)
+    .set(data)
+    .where(and(eq(reminders.id, reminderId), eq(reminders.userId, userId)));
+}
+
+export async function deleteReminder(reminderId: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.delete(reminders)
+    .where(and(eq(reminders.id, reminderId), eq(reminders.userId, userId)));
+}
+
+export async function toggleReminder(reminderId: number, userId: number, enabled: boolean) {
+  const db = await getDb();
+  if (!db) throw new Error('Database not available');
+  return db.update(reminders)
+    .set({ enabled })
+    .where(and(eq(reminders.id, reminderId), eq(reminders.userId, userId)));
+}
+
+

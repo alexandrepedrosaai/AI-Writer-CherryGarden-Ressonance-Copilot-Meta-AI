@@ -16,6 +16,10 @@
 - [ ] AI-powered habit suggestions using LLM
 - [ ] Motivational messages based on completion patterns using LLM
 - [ ] Personalized insights based on goals and patterns using LLM
+- [x] Push notification reminders for daily habits
+- [x] Custom reminder time settings per habit
+- [x] Browser notification service integration
+- [x] Reminder scheduling and management
 
 ## Design & Polish
 - [x] Elegant and refined visual design system
