@@ -1,0 +1,31 @@
+name: Deploy Release
+
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-writer-package
+          path: ./release
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v0.1.0
+          name: "AI Writer CherryGarden Ressonance Release"
+          files: ./release/ai_writer_cherrygarden_ressonance
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
