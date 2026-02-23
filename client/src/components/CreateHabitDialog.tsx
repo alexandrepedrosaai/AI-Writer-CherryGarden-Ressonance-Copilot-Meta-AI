@@ -18,6 +18,8 @@ import {
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
+import TemplatesBrowser from "./TemplatesBrowser";
+import { type HabitTemplate } from "@shared/habitTemplates";
 
 const COLORS = [
   "#3b82f6", // blue
@@ -42,6 +44,7 @@ export default function CreateHabitDialog({
   onOpenChange,
   onSuccess,
 }: CreateHabitDialogProps) {
+  const [showTemplates, setShowTemplates] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [frequency, setFrequency] = useState("daily");
@@ -49,6 +52,15 @@ export default function CreateHabitDialog({
   const [icon, setIcon] = useState(ICONS[0]);
 
   const createMutation = trpc.habits.create.useMutation();
+
+  const handleSelectTemplate = (template: HabitTemplate) => {
+    setName(template.name);
+    setDescription(template.description);
+    setFrequency(template.suggestedFrequency);
+    setColor(template.color);
+    setIcon(template.icon);
+    setShowTemplates(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,87 +93,113 @@ export default function CreateHabitDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create New Habit</DialogTitle>
-          <DialogDescription>
-            Add a new habit to start tracking your progress.
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create New Habit</DialogTitle>
+            <DialogDescription>
+              Add a new habit to start tracking your progress.
+            </DialogDescription>
+          </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Habit Name *</label>
-            <Input
-              placeholder="e.g., Morning Exercise"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              disabled={createMutation.isPending}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Description</label>
-            <Textarea
-              placeholder="Add details about this habit..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              disabled={createMutation.isPending}
-              rows={3}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Frequency</label>
-            <Select value={frequency} onValueChange={setFrequency}>
-              <SelectTrigger disabled={createMutation.isPending}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Color</label>
-            <div className="flex gap-2 flex-wrap">
-              {COLORS.map((c) => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setColor(c)}
-                  className={`w-8 h-8 rounded-full border-2 transition-smooth ${
-                    color === c ? "border-accent" : "border-transparent"
-                  }`}
-                  style={{ backgroundColor: c }}
-                  disabled={createMutation.isPending}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-3 justify-end">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={createMutation.isPending}
+              className="w-full"
+              onClick={() => setShowTemplates(true)}
             >
-              Cancel
+              Browse Templates
             </Button>
-            <Button
-              type="submit"
-              disabled={createMutation.isPending}
-            >
-              {createMutation.isPending ? "Creating..." : "Create Habit"}
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border"></div>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or create custom</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Habit Name *</label>
+              <Input
+                placeholder="e.g., Morning Exercise"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={createMutation.isPending}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Description</label>
+              <Textarea
+                placeholder="Add details about this habit..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                disabled={createMutation.isPending}
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Frequency</label>
+              <Select value={frequency} onValueChange={setFrequency}>
+                <SelectTrigger disabled={createMutation.isPending}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
+                  <SelectItem value="monthly">Monthly</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Color</label>
+              <div className="flex gap-2 flex-wrap">
+                {COLORS.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setColor(c)}
+                    className={`w-8 h-8 rounded-full border-2 transition-smooth ${
+                      color === c ? "border-accent" : "border-transparent"
+                    }`}
+                    style={{ backgroundColor: c }}
+                    disabled={createMutation.isPending}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-end">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                disabled={createMutation.isPending}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={createMutation.isPending}
+              >
+                {createMutation.isPending ? "Creating..." : "Create Habit"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <TemplatesBrowser
+        open={showTemplates}
+        onOpenChange={setShowTemplates}
+        onSelectTemplate={handleSelectTemplate}
+      />
+    </>
   );
 }

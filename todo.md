@@ -41,3 +41,12 @@
 - [x] Store snoozed reminders in local storage
 - [x] Display snooze status on habit cards
 - [x] Create useSnooze hook for managing snooze state
+
+## Habit Templates Feature
+- [x] Create templates library with metadata (category, difficulty, description)
+- [x] Build templates browser UI with categories and search
+- [x] Implement template preview dialog
+- [x] Add template creation flow with customization
+- [x] Integrate templates into create habit dialog
+- [x] Add templates to dashboard quick-start section
+- [x] Test templates functionality

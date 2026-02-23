@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import HabitCard from "@/components/HabitCard";
 import CreateHabitDialog from "@/components/CreateHabitDialog";
 import { requestNotificationPermission } from "@/lib/notificationService";
+import TemplatesBrowser from "@/components/TemplatesBrowser";
+import { HABIT_TEMPLATES, type HabitTemplate } from "@shared/habitTemplates";
 
 export default function Dashboard() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -35,6 +37,12 @@ export default function Dashboard() {
   const [showNotificationBanner, setShowNotificationBanner] = useState(
     typeof window !== 'undefined' && 'Notification' in window && Notification.permission !== 'granted'
   );
+  const [showTemplates, setShowTemplates] = useState(false);
+
+  const handleSelectTemplate = (template: HabitTemplate) => {
+    setShowCreateDialog(true);
+    setShowTemplates(false);
+  };
 
   useEffect(() => {
     requestNotificationPermission().catch(console.error);
@@ -143,14 +151,48 @@ export default function Dashboard() {
             ))}
           </div>
         ) : habits.length === 0 ? (
-          <div className="text-center py-16">
-            <h3 className="text-xl font-serif font-semibold mb-2">No habits yet</h3>
-            <p className="text-muted-foreground mb-6">
-              Create your first habit to get started on your journey.
-            </p>
-            <Button onClick={() => setShowCreateDialog(true)} size="lg">
-              Create Your First Habit
-            </Button>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-lg font-serif font-semibold mb-4">Get Started with Templates</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {HABIT_TEMPLATES.slice(0, 6).map(template => (
+                  <button
+                    key={template.id}
+                    onClick={() => setShowTemplates(true)}
+                    className="p-4 rounded-lg border border-border/50 hover:border-accent/50 transition-smooth text-left group"
+                  >
+                    <div className="flex items-start gap-3 mb-2">
+                      <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-110 transition-smooth"
+                        style={{ backgroundColor: `${template.color}20` }}
+                      >
+                        {template.icon === 'circle' ? '●' : '◆'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm line-clamp-1">{template.name}</h3>
+                        <p className="text-xs text-muted-foreground line-clamp-1">{template.description}</p>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <Button
+                variant="outline"
+                className="mt-4 w-full"
+                onClick={() => setShowTemplates(true)}
+              >
+                Browse All Templates
+              </Button>
+            </div>
+            <div className="text-center py-8">
+              <h3 className="text-xl font-serif font-semibold mb-2">Or create a custom habit</h3>
+              <p className="text-muted-foreground mb-6">
+                Build your own habit from scratch with custom settings.
+              </p>
+              <Button onClick={() => setShowCreateDialog(true)} size="lg">
+                Create Custom Habit
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -170,6 +212,13 @@ export default function Dashboard() {
         open={showCreateDialog}
         onOpenChange={setShowCreateDialog}
         onSuccess={handleHabitCreated}
+      />
+
+      {/* Templates Browser */}
+      <TemplatesBrowser
+        open={showTemplates}
+        onOpenChange={setShowTemplates}
+        onSelectTemplate={handleSelectTemplate}
       />
     </div>
   );
