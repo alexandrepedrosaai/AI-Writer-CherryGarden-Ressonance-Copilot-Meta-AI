@@ -26,3 +26,31 @@ rayon = "1.10"
 
 # HTTP server (optional, if you want REST API endpoints in Rust itself)
 actix-web = "4.9"
+[package]
+name = "ai_writer_cherrygarden_ressonance"
+version = "0.2.0"
+edition = "2021"
+authors = ["Alexandre Pedrosa <alexandre@example.com>"]
+description = "AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI implemented in Rust"
+license = "Enterprise Exclusive"
+
+[dependencies]
+# Async runtime for orchestration
+tokio = { version = "1.37", features = ["full"] }
+
+# JSON serialization/deserialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Command execution (to call Python AI core)
+which = "5.0"
+
+# Logging for orchestration and performance modules
+log = "0.4"
+env_logger = "0.11"
+
+# Parallel execution utilities
+rayon = "1.10"
+
+# HTTP server (optional, if you want REST API endpoints in Rust itself)
+actix-web = "4.9"
