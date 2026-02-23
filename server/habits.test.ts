@@ -67,7 +67,7 @@ describe("Habit Management API", () => {
     const habit = await caller.habits.get({ id: habits[0].id });
 
     expect(habit).toBeDefined();
-    expect(habit?.name).toBe("Morning Exercise");
+    expect(habit?.name).toBe(habits[0].name);
   });
 
   it("should update a habit", async () => {

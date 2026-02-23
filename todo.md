@@ -32,3 +32,12 @@
 - [ ] Unit tests for API procedures
 - [x] Browser testing and refinement
 - [ ] Final checkpoint and delivery
+
+## Snooze Feature
+- [x] Add snooze interval configuration per reminder
+- [x] Enhance notification service with snooze logic
+- [x] Implement service worker for persistent notifications
+- [x] Add snooze button to notification UI
+- [x] Store snoozed reminders in local storage
+- [x] Display snooze status on habit cards
+- [x] Create useSnooze hook for managing snooze state

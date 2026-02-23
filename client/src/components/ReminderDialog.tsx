@@ -12,7 +12,7 @@ import { trpc } from "@/lib/trpc";
 import { Reminder } from "@shared/types";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { Bell, Trash2 } from "lucide-react";
+import { Bell, Trash2, X } from "lucide-react";
 
 interface ReminderDialogProps {
   habitId: number;
@@ -20,6 +20,7 @@ interface ReminderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess: () => void;
+  defaultSnoozeIntervals?: number[];
 }
 
 export default function ReminderDialog({
@@ -28,9 +29,12 @@ export default function ReminderDialog({
   open,
   onOpenChange,
   onSuccess,
+  defaultSnoozeIntervals = [5, 10, 15],
 }: ReminderDialogProps) {
   const [reminderTime, setReminderTime] = useState("09:00");
   const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [snoozeIntervals, setSnoozeIntervals] = useState<number[]>(defaultSnoozeIntervals);
+  const [snoozeInput, setSnoozeInput] = useState("");
 
   const listQuery = trpc.reminders.listByHabit.useQuery({ habitId }, { enabled: open });
   const createMutation = trpc.reminders.create.useMutation();
@@ -90,16 +94,29 @@ export default function ReminderDialog({
     }
   };
 
+  const handleAddSnoozeInterval = () => {
+    const num = parseInt(snoozeInput);
+    if (num > 0 && num <= 120 && !snoozeIntervals.includes(num)) {
+      setSnoozeIntervals([...snoozeIntervals, num].sort((a, b) => a - b));
+      setSnoozeInput("");
+      toast.success(`Added ${num} minute snooze option`);
+    } else if (snoozeIntervals.includes(num)) {
+      toast.error("This snooze interval already exists");
+    } else {
+      toast.error("Please enter a value between 1 and 120");
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Bell className="w-5 h-5" />
-            Set Reminders for {habitName}
+            Reminders for {habitName}
           </DialogTitle>
           <DialogDescription>
-            Get notified at specific times to complete this habit.
+            Set reminder times and configure snooze options.
           </DialogDescription>
         </DialogHeader>
 
@@ -125,6 +142,54 @@ export default function ReminderDialog({
               {createMutation.isPending ? "Creating..." : "Add Reminder"}
             </Button>
           </form>
+
+          {/* Snooze interval settings */}
+          <div className="space-y-3 p-4 bg-muted/30 rounded-lg">
+            <label className="text-sm font-medium">Snooze Options (minutes)</label>
+            <div className="flex flex-wrap gap-2">
+              {snoozeIntervals.map((interval, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-2 bg-background px-3 py-2 rounded border border-border"
+                >
+                  <span className="text-sm font-medium">{interval}</span>
+                  <button
+                    onClick={() => setSnoozeIntervals(snoozeIntervals.filter((_, i) => i !== idx))}
+                    className="text-destructive hover:bg-destructive/10 p-0.5 rounded"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min="1"
+                max="120"
+                placeholder="Add interval (e.g., 5)"
+                value={snoozeInput}
+                onChange={(e) => setSnoozeInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleAddSnoozeInterval();
+                  }
+                }}
+                className="text-sm"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleAddSnoozeInterval}
+              >
+                Add
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              These intervals will appear as snooze buttons in notifications
+            </p>
+          </div>
 
           {/* List existing reminders */}
           {reminders.length === 0 ? (

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import EditHabitDialog from "./EditHabitDialog";
 import ReminderDialog from "./ReminderDialog";
+import { useSnooze } from "@/hooks/useSnooze";
 import { toast } from "sonner";
 
 interface HabitCardProps {
@@ -22,6 +23,7 @@ interface HabitCardProps {
 export default function HabitCard({ habit, onUpdate }: HabitCardProps) {
   const [editOpen, setEditOpen] = useState(false);
   const [reminderOpen, setReminderOpen] = useState(false);
+  const { isSnoozed, timeRemaining } = useSnooze(habit.id);
   const toggleMutation = trpc.completions.toggleToday.useMutation();
   const checkTodayQuery = trpc.completions.checkToday.useQuery({ habitId: habit.id });
   const deleteMutation = trpc.habits.delete.useMutation();
@@ -105,11 +107,16 @@ export default function HabitCard({ habit, onUpdate }: HabitCardProps) {
           </DropdownMenu>
         </div>
 
-        {/* Frequency badge */}
-        <div className="mb-4">
+        {/* Frequency and snooze badges */}
+        <div className="mb-4 flex items-center gap-2 flex-wrap">
           <span className="inline-block px-2 py-1 text-xs font-medium bg-accent/10 text-accent rounded-full">
             {habit.frequency}
           </span>
+          {isSnoozed && (
+            <span className="inline-block px-2 py-1 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
+              Snoozed {timeRemaining}
+            </span>
+          )}
         </div>
 
         {/* Streak info */}
