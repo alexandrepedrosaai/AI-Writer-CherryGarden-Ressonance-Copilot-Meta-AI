@@ -2,7 +2,7 @@ name: Deploy Release
 
 on:
   workflow_run:
-    workflows: ["Build and Test"]
+    workflows: ["Build and Package"]
     types: 
       - completed
 
@@ -31,6 +31,6 @@ jobs:
         with:
           tag_name: v0.2.0
           name: "AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/releases/tag/v0.2.0"
-          files: "AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/releases/tag/v0.2.0"
+          files: "./release/*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
