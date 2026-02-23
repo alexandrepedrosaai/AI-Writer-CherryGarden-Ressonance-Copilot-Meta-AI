@@ -34,10 +34,4 @@ jobs:
         run: cargo test --verbose --manifest-path rust-core/Cargo.toml
 
       - name: Build project
-        run: cargo build --release --manifest-path rust-core/Cargo.toml
-
-      - name: Upload binary as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-writer-package
-          path: rust-core/target/release/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI
+        run: cargo build --release --manifest-path rust-core/Cargo.tol
