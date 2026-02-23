@@ -1,0 +1,17 @@
+[package]
+name = "ai_writer_cherrygarden_ressonance_v2"
+version = "0.2.0"
+edition = "2021"
+authors = ["Alexandre Pedrosa <alexandre@example.com>"]
+description = "AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI — Release 0.2.0 com novos módulos e melhorias"
+license = "Enterprise Exclusive"
+
+[dependencies]
+tokio = { version = "1.37", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+which = "5.0"
+log = "0.4"
+env_logger = "0.11"
+rayon = "1.10"
+actix-web = "4.9"
