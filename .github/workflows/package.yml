@@ -41,7 +41,6 @@ jobs:
         with:
           name: ai-writer-package
           path: rust-core/target/release/ai_writer_cherrygarden_ressonance
-jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps: ...
