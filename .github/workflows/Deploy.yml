@@ -12,6 +12,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write
+      actions: read
 
     steps:
       - name: Checkout repository
@@ -23,6 +24,7 @@ jobs:
           name: ai-writer-package
           path: ./release
           run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
