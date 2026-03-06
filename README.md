@@ -1,4 +1,5 @@
 # AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI
+[![Rust](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/rust.yml/badge.svg)](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/rust.yml)
 [![Dependabot Updates](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/dependabot/dependabot-updates)
 [![Deploy Release](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/Deploy.yml/badge.svg)](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/Deploy.yml)
 [![Build and Test](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/Build.yml/badge.svg)](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/actions/workflows/Build.yml)
