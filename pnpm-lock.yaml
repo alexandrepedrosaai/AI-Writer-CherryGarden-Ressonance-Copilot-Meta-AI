@@ -152,8 +152,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       jose:
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 6.2.0
+        version: 6.2.0
       lucide-react:
         specifier: ^0.453.0
         version: 0.453.0(react@19.2.1)
@@ -3373,8 +3373,8 @@ packages:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
 
-  jose@6.1.0:
-    resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
+  jose@6.2.0:
+    resolution: {integrity: sha512-xsfE1TcSCbUdo6U07tR0mvhg0flGxU8tPLbF03mirl2ukGQENhUg4ubGYQnhVH0b5stLlPM+WOqDkEl1R1y5sQ==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -8024,7 +8024,7 @@ snapshots:
 
   jiti@2.6.1: {}
 
-  jose@6.1.0: {}
+  jose@6.2.0: {}
 
   js-tokens@4.0.0: {}
 
