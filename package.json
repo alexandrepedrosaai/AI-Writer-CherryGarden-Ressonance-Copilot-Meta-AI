@@ -79,7 +79,7 @@
   "devDependencies": {
     "@builder.io/vite-plugin-jsx-loc": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.1.3",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/express": "5.0.6",
     "@types/google.maps": "^3.58.1",
     "@types/node": "^25.3.5",
