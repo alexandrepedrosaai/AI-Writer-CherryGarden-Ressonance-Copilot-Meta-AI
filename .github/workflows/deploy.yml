@@ -34,7 +34,7 @@ jobs:
       - name: Build Static Site
         run: |
           # Set base path for GitHub Pages if needed
-          # For example: export VITE_BASE_URL=/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/
+          export VITE_BASE_URL=/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/
           pnpm run build
         env:
           NODE_ENV: production
