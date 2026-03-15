@@ -52,3 +52,13 @@ Acesse: `https://alexandrepedrosaai.github.io/AI-Writer-CherryGarden-Ressonance-
 ---
 **Autor**: Manus AI
 **Data**: 15 de Março de 2026
+
+
+### GitHub Pages DNS Verification Challenge
+
+If you decide to enable GitHub Pages with a custom domain in the future, the following DNS verification challenge record was provided:
+
+**Challenge Record:** `_github-pages-challenge-alexandrepedrosaai`
+**Verification String:** `ce309fc6e782e53665c01ca291a068`
+
+This record should be added as a TXT record to your domain's DNS settings for verification purposes.
