@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  packages: write # Required for pushing Docker images to GitHub Packages
+  packages: write
   id-token: write
 
 jobs:
@@ -33,6 +33,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/alexandrepedrosaai/safir-package:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
