@@ -1,5 +1,5 @@
 # Stage 1: Build Rust Core
-FROM rust:1.85-slim-bookworm AS rust-builder
+FROM rust:1.88-slim-bookworm AS rust-builder
 WORKDIR /app/rust-core
 COPY rust-core/ .
 RUN cargo build --release
@@ -13,7 +13,7 @@ RUN npm install -g pnpm@10.4.1
 
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
-COPY patches ./patches
+# COPY patches ./patches # Removed due to broken patch
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
