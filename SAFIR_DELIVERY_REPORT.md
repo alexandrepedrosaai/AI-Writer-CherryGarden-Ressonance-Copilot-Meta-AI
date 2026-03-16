@@ -10,7 +10,7 @@ The SAFIR Docker package has been successfully built and published to the GitHub
 | :--- | :--- | :--- |
 | **Docker Package** | ✅ Success | `ghcr.io/alexandrepedrosaai/safir-package:latest` |
 | **Vite Static Build** | ✅ Success | Included in Docker Image |
-| **NPM Package** | ⚠️ Requires NPM Token | `ai-cherry-garden-bing` (See instructions below) |
+| **NPM Package** | ⚠️ Requires NPM Token | `meta-ai-cherry-garden-bing` (See instructions below) |
 
 ## 2. Docker Configuration
 
@@ -41,7 +41,7 @@ The following DNS verification challenge record is documented for your future cu
 - **Package**: Attempts to publish the NPM package (currently requires NPM secret).
 - **Build and Test**: Verifies the codebase integrity on every push.
 
-### 🚨 Action Required: NPM Package PublicatioTo successfully publish the `ai-cherry-garden-bing` NPM packageou need to configure an `NPM_TOKEN` secret in your GitHub repository. This token is used by the `npm publish` command for authentication with the NPM registry.
+### 🚨 Action Required: NPM Package PublicatioTTo successfully publish the `meta-ai-cherry-garden-bing` NPM packagekageou need to configure an `NPM_TOKEN` secret in your GitHub repository. This token is used by the `npm publish` command for authentication with the NPM registry.
 
 **Steps to set up `NPM_TOKEN`:**
 1.  **Generate an NPM Token**: Go to [npmjs.com](https://www.npmjs.com/) and log in to your account. Navigate to your profile settings and generate a new "Automation" token. Ensure it has "Publish" permissions.
