@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment: NPM_TOKEN
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -24,11 +25,12 @@ jobs:
       - name: Build package
         run: npm run build
 
-      # - name: Run tests
-      #   run: npm test
-
       - name: Publish to npm
         if: github.ref == 'refs/heads/main'
-        run: npm publish
+        run: |
+          test -n "$NODE_AUTH_TOKEN" || (echo "NPM_TOKEN is not set" && exit 1)
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm whoami
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
