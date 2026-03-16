@@ -15,17 +15,20 @@ The Bing Meta AI Garden Docker package has been successfully built and published
 
 
 
-## 2. NPM Publication Fix
+## 2. NPM Publication with 2FA Support
 
-The `ENEEDAUTH` error in your GitHub Actions indicates that the `NPM_TOKEN` secret is missing. To fix this and publish your package:
+If your NPM account has **Two-Factor Authentication (2FA)** enabled, standard tokens will fail. You must use an **Automation Token** to bypass 2FA for CI/CD publication:
 
-1.  **Generate NPM Token**: Go to [npmjs.com](https://www.npmjs.com/) > Profile Settings > Access Tokens > Generate New Token (Automation).
+1.  **Generate Automation Token**:
+    - Log in to [npmjs.com](https://www.npmjs.com/).
+    - Go to **Access Tokens** > **Generate New Token**.
+    - Select **"Automation"** (this is critical for bypassing 2FA during CI/CD).
 2.  **Add to GitHub Secrets**:
     - Go to your repo: [Settings > Secrets and variables > Actions](https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI/settings/secrets/actions).
     - Click **New repository secret**.
     - Name: `NPM_TOKEN`.
-    - Value: Paste your NPM token.
-3.  **Re-run Job**: The next push to `main` will automatically publish the package.
+    - Value: Paste your NPM Automation Token.
+3.  **Automatic Publication**: Once the secret is added, the next push to the `main` branch will automatically publish **`bing-meta-ai-garden`**.
 
 ## 3. Docker Configuration
 
