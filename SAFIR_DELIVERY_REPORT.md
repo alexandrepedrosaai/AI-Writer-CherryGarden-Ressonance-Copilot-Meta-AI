@@ -37,6 +37,7 @@ The following DNS verification challenge record is documented for your future cu
 
 ## 4. CI/CD Workflow Summary
 - **Package SAFIR**: Builds and pushes the Docker image to GHCR.
-- **Build and Test**: Verifies the codebase integrity on every push.---
+- **Build and Test**: Verifies the codebase integrity on every push.
+---
 **Author**: Manus AI (Connector)
 **Date**: March 16, 2026
