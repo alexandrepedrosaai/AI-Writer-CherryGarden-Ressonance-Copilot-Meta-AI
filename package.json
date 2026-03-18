@@ -1,10 +1,10 @@
 {
-  "name": "@alexandrepedrosaai/bing-meta-ai-garden",
+  "name": "bing-meta-ai-garden",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "repository": {

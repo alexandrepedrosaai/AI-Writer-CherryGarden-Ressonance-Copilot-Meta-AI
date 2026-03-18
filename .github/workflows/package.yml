@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   compare_versions:
@@ -14,24 +13,38 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+
       - name: Compare current repo version with all published versions
         id: compare_versions
-        continue-on-error: false
+        continue-on-error: true
         run: |
-          package_name="$(npm run env | grep npm_package_name | cut -d '=' -f 2)"
-          repo_version="$(npm run env | grep npm_package_version | cut -d '=' -f 2)"
-          echo "Repo version is: $repo_version "
+          package_name="$(node -p "require('./package.json').name")"
+          repo_version="$(node -p "require('./package.json').version")"
+          echo "Repo version is: $repo_version"
 
-          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
-          npm config set @npm:registry=https://npm.pkg.github.com/ 
+          # Use the NPM token from secrets
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}
+          
+          # Try to get published versions, handle error if package doesn't exist
+          versions_list=$(npm view $package_name versions --json 2>/dev/null || echo "[]")
+          echo "Published package versions: $versions_list"
 
-          versions_list="$(npm view $package_name versions | tr -d '[,]')"
-          echo "Published package versions: $versions_list "
-
-          [[ "${versions_list}" =~ "'${repo_version}'" ]] && echo "::set-output name=should_publish::false" ||  echo "::set-output name=should_publish::true"
-
+          if [[ "$versions_list" == *"$repo_version"* ]]; then
+            echo "Version $repo_version already published. Skipping."
+            echo "::set-output name=should_publish::false"
+          else
+            echo "Version $repo_version not found. Proceeding to publish."
+            echo "::set-output name=should_publish::true"
+          fi
         shell: bash
 
       - name: Publish package
         if: steps.compare_versions.outputs.should_publish == 'true'
-        run: npm publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
