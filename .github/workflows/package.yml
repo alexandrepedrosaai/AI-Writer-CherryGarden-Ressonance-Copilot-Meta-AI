@@ -14,10 +14,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '20'
-          registry-url: 'https://bing-meta-ai-garden.npmjs.org/'
+          registry-url: 'https://registry.npmjs.org/'
       - name: Install dependencies
         run: |
-          npm config set registry https://bing-meta-ai-garden.npmjs.org/
+          npm config set registry https://registry.npmjs.org/
           npm install --legacy-peer-deps
       - name: Build package
         run: npm run build
@@ -25,8 +25,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           test -n "$NODE_AUTH_TOKEN" || (echo "NPM_TOKEN is not set" && exit 1)
-          npm config set //bing-meta-ai-garden.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
           npm whoami
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    
