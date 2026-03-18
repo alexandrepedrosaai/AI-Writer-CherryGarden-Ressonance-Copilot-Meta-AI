@@ -5,7 +5,7 @@ COPY rust-core/ .
 RUN cargo build --release
 
 # Stage 2: Build Node.js Frontend and Backend
-FROM node:22-bookworm-slim AS node-builder
+FROM node:25-bookworm-slim AS node-builder
 WORKDIR /app
 
 # Install pnpm
@@ -24,7 +24,7 @@ COPY . .
 RUN pnpm run build
 
 # Stage 3: Final Image
-FROM node:22-bookworm-slim
+FROM node:25-bookworm-slim
 WORKDIR /app
 
 # Install pnpm for production if needed
