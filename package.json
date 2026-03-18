@@ -1,8 +1,11 @@
 {
-  "name": "bing-meta-ai-garden",
+  "name": "@alexandrepedrosaai/bing-meta-ai-garden",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
