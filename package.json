@@ -1,10 +1,15 @@
 {
-  "name": "@alexandrepedrosaai/meta-ai-garden",
+  "name": "@alexandrepedrosaai/bing-meta-ai-garden",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI.git"
   },
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
