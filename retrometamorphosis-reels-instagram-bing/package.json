@@ -1,0 +1,29 @@
+{
+  "name": "retrometamorphosis-reels-instagram-bing",
+  "version": "1.0.0",
+  "description": "Integration project connecting Instagram Reels and Bing, combining technical automation with symbolic resonance.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node tests/integration.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexandrepedrosa/retrometamorphosis-reels-instagram-bing.git"
+  },
+  "keywords": [
+    "Instagram",
+    "Reels",
+    "Bing",
+    "LinkedIn",
+    "Meta",
+    "Microsoft",
+    "Verified Skills",
+    "Endorsement",
+    "Symbolic Resonance",
+    "Integration"
+  ],
+  "author": "Alexandre Pedrosa",
+  "license": "Meta-Microsoft",
+  "dependencies": {}
+}
