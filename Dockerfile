@@ -15,7 +15,7 @@ RUN npm install -g pnpm@10.4.1
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN pnpm install --legacy-peer-deps
+RUN pnpm install
 
 # Copy source code
 COPY . .
