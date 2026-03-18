@@ -13,10 +13,9 @@ RUN npm install -g pnpm@10.4.1
 
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
-# COPY patches ./patches # Removed due to broken patch
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
@@ -28,7 +27,7 @@ RUN pnpm run build
 FROM node:22-bookworm-slim
 WORKDIR /app
 
-# Install pnpm for production if needed, or just use node
+# Install pnpm for production if needed
 RUN npm install -g pnpm@10.4.1
 
 # Copy built assets from node-builder
