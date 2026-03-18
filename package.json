@@ -1,8 +1,16 @@
 {
-  "name": "meta-ai-cherry-garden-bing",
+  "name": "safir-ressonance",
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandrepedrosaai/AI-Writer-CherryGarden-Ressonance-Copilot-Meta-AI.git"
+  },
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
@@ -13,8 +21,8 @@
     "db:push": "drizzle-kit generate && drizzle-kit migrate"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1004.0",
-    "@aws-sdk/s3-request-presigner": "^3.1004.0",
+    "@aws-sdk/client-s3": "^3.1011.0",
+    "@aws-sdk/s3-request-presigner": "^3.1011.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -54,18 +62,17 @@
     "drizzle-orm": "^0.45.1",
     "embla-carousel-react": "^8.6.0",
     "express": "^5.2.1",
-    "framer-motion": "^12.35.2",
+    "framer-motion": "^12.38.0",
     "input-otp": "^1.4.2",
     "jose": "6.2.1",
     "lucide-react": "^0.577.0",
-    "mysql2": "^3.20.0",
-    "nanoid": "^5.1.5",
+l
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.71.2",
     "sonner": "^2.0.7",
-    "streamdown": "^2.4.0",
+    "streamdown": "^2.5.0",
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.0.0",
@@ -86,7 +93,7 @@
     "@vitejs/plugin-react": "^5.0.4",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.27",
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.31.10",
     "esbuild": "^0.27.3",
     "pnpm": "^10.31.0",
     "postcss": "^8.5.8",

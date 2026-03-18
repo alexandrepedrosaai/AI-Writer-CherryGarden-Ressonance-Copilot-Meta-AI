@@ -1,34 +1,50 @@
-name: Package
+name: Check version and publish package
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+permissions:
+  contents: read
 
 jobs:
-  build-and-publish:
+  compare_versions:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
+      - uses: actions/checkout@v6
+      
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://registry.npmjs.org/'
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
+      - name: Compare current repo version with all published versions
+        id: compare_versions
+        continue-on-error: true
+        run: |
+          package_name="$(node -p "require('./package.json').name")"
+          repo_version="$(node -p "require('./package.json').version")"
+          echo "Repo version is: $repo_version"
 
-      - name: Build package
-        run: npm run build
+          # Use the NPM token from secrets
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}
+          
+          # Try to get published versions, handle error if package doesn't exist
+          versions_list=$(npm view $package_name versions --json 2>/dev/null || echo "[]")
+          echo "Published package versions: $versions_list"
 
-      # - name: Run tests
-      #   run: npm test
+          if [[ "$versions_list" == *"$repo_version"* ]]; then
+            echo "Version $repo_version already published. Skipping."
+            echo "::set-output name=should_publish::false"
+          else
+            echo "Version $repo_version not found. Proceeding to publish."
+            echo "::set-output name=should_publish::true"
+          fi
+        shell: bash
 
-      - name: Publish to npm
-        if: github.ref == 'refs/heads/main'
-        run: npm publish
+      - name: Publish package
+        if: steps.compare_versions.outputs.should_publish == 'true'
+        run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
