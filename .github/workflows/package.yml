@@ -23,12 +23,6 @@ jobs:
       - name: Publish to npm
         if: github.ref == 'refs/heads/main'
         run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "Error: NODE_AUTH_TOKEN is not set in GitHub Secrets."
-            exit 1
-          fi
-          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          npm whoami
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
