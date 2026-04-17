@@ -1,5 +1,5 @@
 # Stage 1: Build Rust Core
-FROM rust:1.94-slim-bookworm AS rust-builder
+FROM rust:1.95-slim-bookworm AS rust-builder
 WORKDIR /app/rust-core
 COPY rust-core/ .
 RUN cargo build --release
